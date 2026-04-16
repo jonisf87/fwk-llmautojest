@@ -84,7 +84,6 @@ User question
 | File | Tag | CI Gate | Description |
 |---|---|---|---|
 | `prompt-template.test.ts` | `@smoke-ai` | YES | System prompt followed (language, scope) |
-| `context-coherence.test.ts` | `@smoke-ai` | YES | Pronoun resolution across turns |
 | `branching-conversations.test.ts` | `@smoke-ai` | YES | Independent branches from shared parent |
 | `tools.test.ts` | `@smoke-ai` | YES | Backend tool called + frontend tool continuation |
 
