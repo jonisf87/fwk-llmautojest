@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.js.map
+environments/*.env
+!environments/example.env
+reports/eval/*.csv
+.env
+.env.local
