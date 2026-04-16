@@ -1,5 +1,5 @@
 /**
- * Shared TypeScript interfaces for fmw-llmmautojest.
+ * Shared TypeScript interfaces for fwk-llmautojest.
  *
  * Intentionally provider-agnostic — no OpenAI/Anthropic/Gemini imports here.
  */

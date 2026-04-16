@@ -13,7 +13,7 @@ if (process.env.CI) {
 export default async (): Promise<Config> => {
   return {
     clearMocks: true,
-    displayName: 'fmw-llmmautojest',
+    displayName: 'fwk-llmautojest',
     moduleNameMapper: {
       '^@agent/(.*)$': resolve(__dirname, './src/agent/$1'),
       '^@judge/(.*)$': resolve(__dirname, './src/judge/$1'),

@@ -1,4 +1,4 @@
-# fmw-llmmautojest
+# fwk-llmautojest
 
 **LLM-as-a-Judge integration testing framework with Jest.**
 
@@ -178,7 +178,7 @@ Frontend visualisation scenario.
 ## Project Structure
 
 ```
-fmw-llmmautojest/
+fwk-llmautojest/
 ├── src/
 │   ├── tests/
 │   │   ├── structural/      # model-health

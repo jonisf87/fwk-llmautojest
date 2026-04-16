@@ -1,5 +1,5 @@
 {
-  "name": "fmw-llmmautojest",
+  "name": "fwk-llmautojest",
   "version": "1.0.0",
   "description": "LLM-as-a-Judge integration testing framework with Jest. Provider-agnostic, runs with any OpenAI-compatible API. Workshop & interview reference.",
   "main": "index.js",

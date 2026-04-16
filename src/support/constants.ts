@@ -1,5 +1,5 @@
 /**
- * Constants for fmw-llmmautojest
+ * Constants for fwk-llmautojest
  *
  * Centralised strings and numeric literals used across tests.
  * All values are provider-agnostic.
