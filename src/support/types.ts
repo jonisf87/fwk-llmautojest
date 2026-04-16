@@ -36,8 +36,8 @@ export interface ToolResponse {
 
 /**
  * Normalised result returned by AgentClient.send().
- * The `parseResult` field mirrors the original SSEParseResult shape for easy
- * reuse of eval/perf test logic ported from the CARTO project.
+ * The `parseResult` field mirrors the SSEParseResult shape for backward
+ * compatibility with eval/perf test logic.
  */
 export interface AgentResponse {
   responseId: string

@@ -60,14 +60,14 @@ User question
 
 **Key design decisions:**
 
-| Original (CARTO) | This project |
+| Pattern | Implementation |
 |---|---|
-| CARTO workspace-api | Direct LLM API calls via SDK |
-| Auth0 + agentToken | API keys in `.env` |
-| BigQuery CI datasets | Mock JSON data (`fixtures/tool-data.ts`) |
-| Kepler maps + widgets | `AgentSession` (system prompt + tools) |
-| Vertex AI judge | `@google/generative-ai` API key |
-| Google Secret Manager | `.env` file |
+| Provider-agnostic agent | Direct LLM API calls via SDK |
+| Auth | API keys in `.env` |
+| Data layer | Mock JSON data (`fixtures/tool-data.ts`) |
+| Agent config | `AgentSession` (system prompt + tools) |
+| AI Judge | `@google/generative-ai` API key |
+| Secrets | `.env` file |
 
 ---
 

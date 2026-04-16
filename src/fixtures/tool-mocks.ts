@@ -1,7 +1,6 @@
 /**
  * Frontend tool mock definitions for golden-dataset scenarios.
  *
- * Mirrors the FrontendToolMock pattern from the original CARTO project.
  * Each mock defines: which tool to match, optional argument matching,
  * and the pre-built output to return as functionCallOutput.
  */

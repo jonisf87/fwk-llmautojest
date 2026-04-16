@@ -4,7 +4,7 @@
  * Each scenario describes a multi-turn conversation with expected tools,
  * reference outputs, and optional frontend tool mocks.
  *
- * Replaces the CARTO project's ai-scenarios.ts (Bristol, fleet, weather).
+ * Domain-agnostic scenarios: sales-analyzer, knowledge-search, data-explorer.
  *
  * Tier A:
  *   sales-analyzer — backend tools only, ephemeral session, all providers.
