@@ -1,5 +1,4 @@
 import type { Config } from 'jest'
-import { resolve } from 'path'
 
 /** Default timeout — generous enough for LLM API calls + tool execution. */
 export const JEST_TEST_TIMEOUT = 3 * 60 * 1_000 // 3 minutes
@@ -15,11 +14,11 @@ export default async (): Promise<Config> => {
     clearMocks: true,
     displayName: 'fwk-llmautojest',
     moduleNameMapper: {
-      '^@agent/(.*)$': resolve(__dirname, './src/agent/$1'),
-      '^@judge/(.*)$': resolve(__dirname, './src/judge/$1'),
-      '^@fixtures/(.*)$': resolve(__dirname, './src/fixtures/$1'),
-      '^@support/(.*)$': resolve(__dirname, './src/support/$1'),
-      '^@settings$': resolve(__dirname, './src/settings')
+      '^@agent/(.*)$': '<rootDir>/src/agent/$1',
+      '^@judge/(.*)$': '<rootDir>/src/judge/$1',
+      '^@fixtures/(.*)$': '<rootDir>/src/fixtures/$1',
+      '^@support/(.*)$': '<rootDir>/src/support/$1',
+      '^@settings$': '<rootDir>/src/settings'
     },
     testPathIgnorePatterns: [
       '<rootDir>/jest.config.ts',
