@@ -1,5 +1,10 @@
 # fwk-llmautojest
 
+[![CI](https://github.com/jonisf87/fwk-llmautojest/actions/workflows/ci.yml/badge.svg)](https://github.com/jonisf87/fwk-llmautojest/actions/workflows/ci.yml)
+![Node](https://img.shields.io/badge/node-%E2%89%A520.19-339933)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6)
+![Jest](https://img.shields.io/badge/Jest-30-C21325)
+
 **LLM-as-a-Judge integration testing framework with Jest.**
 
 Provider-agnostic, runs anywhere with a single API key. No cloud platform auth, no proprietary services, no external databases. Mock tools included — everything self-contained.
@@ -10,15 +15,20 @@ Built as a reference implementation for workshops and technical interviews demon
 
 ## Quick Start
 
+Requires **Node.js ≥ 20.19** (CI runs on Node 20, 22 and 24).
+
 ```bash
 # 1. Install dependencies
-npm install
+npm ci
 
 # 2. Configure (copy example, add your API key)
 cp environments/example.env environments/local.env
 # Edit local.env — set at least OPENAI_API_KEY + GEMINI_API_KEY (or ANTHROPIC_API_KEY for judge)
 
-# 3. Run CI-gated smoke tests (structural + semantic)
+# 3. Offline checks — no API keys needed (this is what GitHub Actions runs)
+npm run lint && npm run typecheck && npm run test:unit
+
+# 3b. Run live smoke tests against real models (structural + semantic)
 npm run test:ci
 
 # 4. Run all tests
@@ -73,6 +83,10 @@ User question
 
 ## Test Inventory
 
+### Unit (`src/tests/unit/`)
+
+Offline tests — mock fixtures, retry/stat helpers and assertions. No API keys, run on every push/PR via GitHub Actions (`npm run test:unit`).
+
 ### Structural (`src/tests/structural/`)
 
 | File | Tag | CI Gate | Description |
@@ -107,10 +121,10 @@ Set `AI_TEST_MODELS` as a JSON string in your `.env`:
 
 ```bash
 # Single model (fastest for smoke testing)
-AI_TEST_MODELS={"OPENAI":[{"id":"1","provider":"OPENAI","model":"gpt-4o-mini"}]}
+AI_TEST_MODELS={"OPENAI":[{"id":"1","provider":"OPENAI","model":"gpt-5-mini"}]}
 
 # Multi-provider
-AI_TEST_MODELS={"OPENAI":[{"id":"1","provider":"OPENAI","model":"gpt-4o-mini"}],"ANTHROPIC":[{"id":"2","provider":"ANTHROPIC","model":"claude-3-5-haiku-20241022"}],"GEMINI":[{"id":"3","provider":"GEMINI","model":"gemini-1.5-flash"}]}
+AI_TEST_MODELS={"OPENAI":[{"id":"1","provider":"OPENAI","model":"gpt-5-mini"}],"ANTHROPIC":[{"id":"2","provider":"ANTHROPIC","model":"claude-haiku-5-5"}],"GEMINI":[{"id":"3","provider":"GEMINI","model":"gemini-flash-latest"}]}
 ```
 
 **Supported providers:**
@@ -121,6 +135,8 @@ AI_TEST_MODELS={"OPENAI":[{"id":"1","provider":"OPENAI","model":"gpt-4o-mini"}],
 | Anthropic | `ANTHROPIC_API_KEY` | Uses native Anthropic SDK |
 | Google Gemini | `GEMINI_API_KEY` | Uses `@google/generative-ai` |
 | Ollama / LM Studio | `OPENAI_BASE_URL=http://localhost:11434/v1` | OpenAI-compatible mode |
+
+Default models: `gpt-5-mini` (OpenAI), `claude-haiku-5-5` (Anthropic), `gemini-flash-latest` (Gemini alias). Override via `AI_TEST_MODELS` / `JUDGE_MODEL`.
 
 **Judge provider** (for semantic/eval tests):
 
@@ -181,6 +197,7 @@ Frontend visualisation scenario.
 fwk-llmautojest/
 ├── src/
 │   ├── tests/
+│   │   ├── unit/            # offline tests (run in CI)
 │   │   ├── structural/      # model-health
 │   │   ├── semantic/        # prompt-template, context-coherence, branching, tools
 │   │   └── eval/            # golden-datasets, grounding, robustness, tool-arg, coherence
@@ -192,6 +209,7 @@ fwk-llmautojest/
 ├── environments/
 │   └── example.env          # Template with all variables documented
 ├── reports/eval/            # CSV output (gitignored)
+├── .github/workflows/ci.yml  # lint + typecheck + unit tests, Node 20/22/24
 ├── jest.config.ts
 ├── package.json
 └── README.md

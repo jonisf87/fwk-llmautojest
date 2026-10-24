@@ -52,17 +52,17 @@ export interface ModelTestConfig {
  * JSON format:
  * ```json
  * {
- *   "OPENAI": [{"id":"1","provider":"OPENAI","model":"gpt-4o-mini"}],
- *   "ANTHROPIC": [{"id":"2","provider":"ANTHROPIC","model":"claude-3-5-haiku-20241022"}],
- *   "GEMINI": [{"id":"3","provider":"GEMINI","model":"gemini-1.5-flash"}]
+ *   "OPENAI": [{"id":"1","provider":"OPENAI","model":"gpt-5-mini"}],
+ *   "ANTHROPIC": [{"id":"2","provider":"ANTHROPIC","model":"claude-haiku-5-5"}],
+ *   "GEMINI": [{"id":"3","provider":"GEMINI","model":"gemini-flash-latest"}]
  * }
  * ```
  */
 export const aiTestModels: Record<string, ModelTestConfig[]> = (() => {
   const raw = process.env.AI_TEST_MODELS
   if (!raw) {
-    // Default: gpt-4o-mini — good balance of speed and quality for workshops
-    return { OPENAI: [{ id: '1', provider: 'OPENAI', model: 'gpt-4o-mini' }] }
+    // Default: gpt-5-mini — good balance of speed and quality for workshops
+    return { OPENAI: [{ id: '1', provider: 'OPENAI', model: 'gpt-5-mini' }] }
   }
   try {
     return JSON.parse(raw) as Record<string, ModelTestConfig[]>
@@ -77,7 +77,7 @@ export const aiTestModels: Record<string, ModelTestConfig[]> = (() => {
  */
 export const aiDefaultModel: string = (() => {
   const first = Object.values(aiTestModels).flat()[0]
-  return first?.model ?? 'gpt-4o-mini'
+  return first?.model ?? 'gpt-5-mini'
 })()
 
 /**

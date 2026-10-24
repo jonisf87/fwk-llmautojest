@@ -67,14 +67,14 @@ export class AIJudgeFactory {
       if (!settings.anthropicApiKey) {
         throw new Error('ANTHROPIC_API_KEY required when JUDGE_PROVIDER=anthropic')
       }
-      return createAnthropicJudge(settings.anthropicApiKey, settings.judgeModel ?? 'claude-3-5-haiku-20241022')
+      return createAnthropicJudge(settings.anthropicApiKey, settings.judgeModel ?? 'claude-haiku-5-5')
     }
 
     // Default: Gemini
     if (!settings.geminiApiKey) {
       throw new Error('GEMINI_API_KEY required when JUDGE_PROVIDER=gemini (default). Set JUDGE_PROVIDER=anthropic to use Anthropic instead.')
     }
-    return createGeminiJudge(settings.geminiApiKey, settings.judgeModel ?? 'gemini-1.5-flash')
+    return createGeminiJudge(settings.geminiApiKey, settings.judgeModel ?? 'gemini-flash-latest')
   }
 }
 

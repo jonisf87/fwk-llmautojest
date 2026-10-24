@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test dotenv -e environments/local.env -- jest --silent=false",
-    "test:ci": "NODE_ENV=test dotenv -e environments/local.env -- jest --silent=false --testPathPattern=\"structural|semantic\"",
-    "test:eval": "NODE_ENV=test dotenv -e environments/local.env -- jest --silent=false --testPathPattern=\"eval\"",
+    "test:ci": "NODE_ENV=test dotenv -e environments/local.env -- jest --silent=false --testPathPatterns=\"structural|semantic\"",
+    "test:eval": "NODE_ENV=test dotenv -e environments/local.env -- jest --silent=false --testPathPatterns=\"eval\"",
     "test:debug": "NODE_ENV=test dotenv -e environments/local.env -- node --inspect=0.0.0.0:9238 node_modules/.bin/jest --runInBand --silent=false",
     "lint": "eslint --max-warnings 0 \"src/**/*.ts\"",
-    "lint:fix": "eslint --fix --max-warnings 0 \"src/**/*.ts\""
+    "lint:fix": "eslint --fix --max-warnings 0 \"src/**/*.ts\"",
+    "test:unit": "jest --silent=false --testPathPatterns=\"src/tests/unit\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "keywords": [
     "llm",
@@ -24,22 +26,26 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@swc/core": "^1.11.29",
-    "@swc/jest": "^0.2.21",
+    "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.16.20",
+    "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/node": "^20.0.0",
-    "dotenv-cli": "^8.0.0",
-    "eslint": "^9.17.0",
-    "jest": "^30.0.0",
-    "jest-matcher-utils": "^30.0.0",
-    "typescript": "^5.7.3"
+    "@types/node": "^24.19.2",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^10.13.0",
+    "jest": "^30.5.2",
+    "jest-matcher-utils": "^30.5.2",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
-    "@google/generative-ai": "^0.21.0",
-    "dotenv": "^16.4.5",
-    "openai": "^4.82.0",
-    "uuid": "^11.0.0",
-    "@types/uuid": "^10.0.0"
+    "@anthropic-ai/sdk": "^1.3.0",
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^18.0.9",
+    "openai": "^7.43.0",
+    "uuid": "^14.0.3"
+  },
+  "engines": {
+    "node": ">=20.19"
   }
 }

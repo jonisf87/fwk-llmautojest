@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "lib": ["ES2022"],
     "strict": true,
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "outDir": "dist",
     "rootDir": ".",
-    "baseUrl": ".",
     "paths": {
-      "@agent/*": ["src/agent/*"],
-      "@judge/*": ["src/judge/*"],
-      "@fixtures/*": ["src/fixtures/*"],
-      "@support/*": ["src/support/*"],
-      "@settings": ["src/settings"]
+      "@agent/*": ["./src/agent/*"],
+      "@judge/*": ["./src/judge/*"],
+      "@fixtures/*": ["./src/fixtures/*"],
+      "@support/*": ["./src/support/*"],
+      "@settings": ["./src/settings"]
     }
   },
-  "include": ["src/**/*", "jest.config.ts", "jest-setup.ts"],
+  "include": ["./src/**/*", "jest.config.ts", "jest-setup.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -14,12 +14,18 @@
 
 import OpenAI from 'openai'
 import Anthropic from '@anthropic-ai/sdk'
-import { GoogleGenerativeAI, FunctionCallingMode, SchemaType } from '@google/generative-ai'
+import {
+  GoogleGenerativeAI,
+  FunctionCallingMode,
+  SchemaType,
+  type FunctionDeclaration,
+  type FunctionDeclarationSchema
+} from '@google/generative-ai'
 import { randomUUID } from 'crypto'
 
 import { AgentSession } from './agent-session'
 import { ToolDefinition } from './agent-tools'
-import { AgentResponse, FunctionCallOutput, SendOptions, ToolCall, ToolResponse, TokenUsage, AgentError } from '@support/types'
+import { AgentResponse, SendOptions, ToolCall, ToolResponse, TokenUsage, AgentError } from '@support/types'
 import { withRetry, RETRY_CONSTANTS } from '@support/helpers'
 import * as settings from '@settings'
 
@@ -31,7 +37,7 @@ interface ConversationMessage {
   role: 'system' | 'user' | 'assistant' | 'tool'
   content: string | null
   /** Present on assistant messages that call tools (OpenAI format). */
-  tool_calls?: OpenAI.ChatCompletionMessageToolCall[]
+  tool_calls?: OpenAI.ChatCompletionMessageFunctionToolCall[]
   /** Present on tool result messages. */
   tool_call_id?: string
   name?: string
@@ -98,7 +104,7 @@ export class AgentClient {
     let finalText = ''
     let usage: TokenUsage | undefined
 
-    let currentMessages = [...messages]
+    const currentMessages = [...messages]
 
     for (let iteration = 0; iteration < 10; iteration++) {
       const raw = await this._callProvider(provider, model, currentMessages, toolsToUse, options)
@@ -171,7 +177,7 @@ export class AgentClient {
   // -------------------------------------------------------------------------
 
   private _buildMessages(text: string, options: SendOptions): ConversationMessage[] {
-    let messages: ConversationMessage[] = []
+    let messages: ConversationMessage[]
 
     if (options.previousResponseId) {
       const history = this.conversations.get(options.previousResponseId)
@@ -258,7 +264,7 @@ export class AgentClient {
 
     return {
       text: msg.content ?? '',
-      toolCalls: msg.tool_calls?.map(toToolCall),
+      toolCalls: msg.tool_calls?.filter((tc) => tc.type === 'function').map(toToolCall),
       usage: response.usage ? {
         prompt_tokens: response.usage.prompt_tokens,
         completion_tokens: response.usage.completion_tokens,
@@ -537,7 +543,7 @@ function toOpenAITool(td: ToolDefinition): OpenAI.ChatCompletionTool {
   }
 }
 
-function toToolCall(tc: OpenAI.ChatCompletionMessageToolCall): ToolCall {
+function toToolCall(tc: OpenAI.ChatCompletionMessageFunctionToolCall): ToolCall {
   return {
     id: tc.id,
     name: tc.function.name,
@@ -553,13 +559,13 @@ function toAnthropicTool(td: ToolDefinition): Anthropic.Messages.Tool {
   }
 }
 
-function toGeminiFunctionDeclaration(td: ToolDefinition) {
+function toGeminiFunctionDeclaration(td: ToolDefinition): FunctionDeclaration {
   return {
     name: td.name,
     description: td.description,
     parameters: {
       type: SchemaType.OBJECT,
-      properties: td.parameters.properties as Record<string, { type: SchemaType; description?: string }>,
+      properties: td.parameters.properties as unknown as FunctionDeclarationSchema['properties'],
       required: td.parameters.required
     }
   }
